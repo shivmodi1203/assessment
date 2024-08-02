@@ -19,8 +19,5 @@ stages:
         SecretsFilter: '*'
         RunAsPreJob: false
 
-    # - script: |
-    #     echo "##vso[task.setvariable variable=MY_SECRET_VAR;issecret=true]$(MY_SECRET_NAME)"
-    #   displayName: 'Store secrets in variable group'
     - script: |
           echo $(dev-eic-secret01)
