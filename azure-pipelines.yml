@@ -14,10 +14,10 @@ stages:
     steps:
     - task: AzureKeyVault@2
       inputs:
-        azureSubscription: 'mykeyvault-service'
-        KeyVaultName: 'dev-eic-mykeyvaulty96'
+        azureSubscription: 'azure-service-connection'
+        KeyVaultName: 'dev-eic-mykeyvaulty100'
         SecretsFilter: '*'
-        RunAsPreJob: true
+        RunAsPreJob: false
 
     - script: |
         echo "##vso[task.setvariable variable=MY_SECRET_VAR;issecret=true]$(MY_SECRET_NAME)"
