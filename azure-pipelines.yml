@@ -13,4 +13,19 @@ stages:
   - job: ReadSecrets
     steps:
     - script: |
-          echo $(dev-eic-secret01)
+          echo $(dev-eic-secret01) >> secret.txt
+          echo $(dev-eic-secret02) >> secret.txt
+          echo $(dev-eic-secret03) >> secret.txt
+          echo $(dev-eic-secret04) >> secret.txt
+          echo $(dev-eic-secret05) >> secret.txt
+    - task: CopyFiles@2
+      displayName: Copy secret files
+      inputs:
+        Contents: 'secret.txt'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifacts
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
