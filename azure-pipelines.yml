@@ -15,7 +15,7 @@ stages:
     - task: AzureKeyVault@2
       inputs:
         azureSubscription: 'mykeyvault-service'
-        KeyVaultName: 'dev-eic-mykeyvaulty6'
+        KeyVaultName: 'dev-eic-mykeyvaulty96'
         SecretsFilter: '*'
         RunAsPreJob: true
 
