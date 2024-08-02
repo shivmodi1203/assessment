@@ -12,12 +12,5 @@ stages:
   jobs:
   - job: ReadSecrets
     steps:
-    - task: AzureKeyVault@2
-      inputs:
-        azureSubscription: 'azure-service-connection'
-        KeyVaultName: 'dev-eic-mykeyvaulty100'
-        SecretsFilter: '*'
-        RunAsPreJob: false
-
     - script: |
           echo $(dev-eic-secret01)
