@@ -21,18 +21,18 @@ stages:
         inlineScript: |
           #!/bin/bash
           
-          names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
-          # az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv >> secrets.txt
-          for name in ${names};
-          do
-              echo "${name//-/_}  ==  echo $(${name})" >> secrets.txt
-          done
+          # names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
+          az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv >> secrets.txt
+          # for name in ${names};
+          # do
+          #     echo "${name//-/_}  ==  $(${name})" >> secrets.txt
+          # done
       
-    # - script: |
-    #       while read -r name
-    #       do
-    #           echo "${name//-/_}  ==  $(echo ${name})" >> secrets1.txt
-    #       done < secrets.txt  
+    - script: |
+          while read -r name
+          do
+              echo "${name//-/_}  ==  $(${name})" >> secrets1.txt
+          done < secrets.txt  
 
     # - script: |
     #       echo $(dev-eic-secret01)
@@ -40,7 +40,7 @@ stages:
     - task: CopyFiles@2
       displayName: Copy secret files
       inputs:
-        Contents: 'secrets.txt'
+        Contents: 'secrets1.txt'
         TargetFolder: '$(build.artifactstagingdirectory)'
         
     - task: PublishBuildArtifacts@1
