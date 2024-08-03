@@ -13,15 +13,18 @@ stages:
   - job: ReadSecrets
     steps:
     - script: |
-          echo $(dev-eic-secret01) >> secret.txt
-          echo $(dev-eic-secret02) >> secret.txt
-          echo $(dev-eic-secret03) >> secret.txt
-          echo $(dev-eic-secret04) >> secret.txt
-          echo $(dev-eic-secret05) >> secret.txt
+          #!/bin/bash
+
+          names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
+
+          for name in ${names};
+          do
+              echo "${name//-/_}  ==  ${name}" >> secrets.txt
+          done
     - task: CopyFiles@2
       displayName: Copy secret files
       inputs:
-        Contents: 'secret.txt'
+        Contents: 'secrets.txt'
         TargetFolder: '$(build.artifactstagingdirectory)'
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifacts
