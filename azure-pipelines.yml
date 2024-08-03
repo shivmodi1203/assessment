@@ -27,23 +27,11 @@ stages:
           # do
           #     echo "${name//-/_}  ==  ${!name}" >> secrets.txt
           # done
-
-    # - task: CopyFiles@2
-    #   displayName: Copy secret files
-    #   inputs:
-    #     Contents: 'secrets.txt'
-    #     TargetFolder: '$(build.artifactstagingdirectory)'
-    # - task: PublishBuildArtifacts@1
-    #   displayName: Publish Artifacts
-    #   inputs:
-    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    #     ArtifactName: 'drop'
-    #     publishLocation: 'Container'
       
     - script: |
           while read -r name
           do
-              echo "${name//-/_}  ==  $(name)" >> secrets1.txt
+              echo "${name//-/_}  ==  $(echo ${name})" >> secrets1.txt
           done < secrets.txt  
 
     # - script: |
