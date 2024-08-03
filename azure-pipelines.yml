@@ -25,7 +25,7 @@ stages:
           # az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv >> secrets.txt
           for name in ${names};
           do
-              echo "${name//-/_}  ==  $(echo ${name})" >> secrets.txt
+              echo "${name//-/_}  ==  $(${name})" >> secrets.txt
           done
       
     # - script: |
