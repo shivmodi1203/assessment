@@ -48,7 +48,7 @@ stages:
     #           echo "${name//-/_}  ==  ${!name}" >> secrets1.txt
     #       done < secrets.txt  
     - script: |
-          echo ${dev-eic-secret01}
+          echo $(dev-eic-secret01)
 
     # - task: CopyFiles@2
     #   displayName: Copy secret files
