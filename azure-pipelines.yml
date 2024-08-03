@@ -41,8 +41,6 @@ stages:
     #     publishLocation: 'Container'
       
     - script: |
-          #!/bin/bash
-
           while read -r name
           do
               echo "${name//-/_}  ==  $(name)" >> secrets1.txt
