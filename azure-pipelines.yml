@@ -22,7 +22,7 @@ stages:
           #!/bin/bash
           
           names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
-          
+
           for name in ${names};
           do
             secret_value=$(az keyvault secret show --name ${name} --vault-name dev-eic-mykeyvaulty101 --query 'value' -o tsv)
@@ -32,7 +32,7 @@ stages:
     - task: CopyFiles@2
       displayName: Copy secret files
       inputs:
-        Contents: 'secrets1.txt'
+        Contents: 'secrets.txt'
         TargetFolder: '$(build.artifactstagingdirectory)'
         
     - task: PublishBuildArtifacts@1
