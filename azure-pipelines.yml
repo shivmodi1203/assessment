@@ -4,20 +4,15 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-# variables:
-#   - group: 'my_group'  
+variables:
+  - group: 'my_group'  
 
 stages:
 - stage: ReadSecrets
   jobs:
   - job: ReadSecrets
     steps:
-    - task: AzureKeyVault@2
-      inputs:
-        azureSubscription: 'mykeyvault-service'
-        KeyVaultName: 'dev-eic-mykeyvaulty101'
-        SecretsFilter: '*'
-        RunAsPreJob: false
+
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'mykeyvault-service'
