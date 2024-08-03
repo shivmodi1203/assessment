@@ -25,7 +25,7 @@ stages:
 
           for name in ${names};
           do
-              echo "${name//-/_}  ==  ${name}" >> secrets.txt
+              echo "${name//-/_}  ==  ${${name}}" >> secrets.txt
           done
     
     # - script: |
