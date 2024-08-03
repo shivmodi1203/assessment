@@ -40,23 +40,25 @@ stages:
     #     ArtifactName: 'drop'
     #     publishLocation: 'Container'
       
+    # - script: |
+    #       #!/bin/bash
+
+    #       while read -r name
+    #       do
+    #           echo "${name//-/_}  ==  ${!name}" >> secrets1.txt
+    #       done < secrets.txt  
     - script: |
-          #!/bin/bash
+          echo ${dev-eic-secret01}
 
-          while read -r name
-          do
-              echo "${name//-/_}  ==  ${!name}" >> secrets1.txt
-          done < secrets.txt  
-
-    - task: CopyFiles@2
-      displayName: Copy secret files
-      inputs:
-        Contents: 'secrets1.txt'
-        TargetFolder: '$(build.artifactstagingdirectory)'
+    # - task: CopyFiles@2
+    #   displayName: Copy secret files
+    #   inputs:
+    #     Contents: 'secrets1.txt'
+    #     TargetFolder: '$(build.artifactstagingdirectory)'
         
-    - task: PublishBuildArtifacts@1
-      displayName: Publish Artifacts
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+    # - task: PublishBuildArtifacts@1
+    #   displayName: Publish Artifacts
+    #   inputs:
+    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    #     ArtifactName: 'drop'
+    #     publishLocation: 'Container'
