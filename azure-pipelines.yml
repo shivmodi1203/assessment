@@ -40,7 +40,7 @@ stages:
     - task: CopyFiles@2
       displayName: Copy secret files
       inputs:
-        Contents: 'secrets1.txt'
+        Contents: 'secrets.txt'
         TargetFolder: '$(build.artifactstagingdirectory)'
         
     - task: PublishBuildArtifacts@1
