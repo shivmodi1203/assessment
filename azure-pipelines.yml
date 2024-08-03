@@ -21,21 +21,13 @@ stages:
         inlineScript: |
           #!/bin/bash
           
-          # names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
-          az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv >> secrets.txt
-          # for name in ${names};
-          # do
-          #     echo "${name//-/_}  ==  $(${name})" >> secrets.txt
-          # done
-      
-    - script: |
-          while read -r name
+          names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
+          
+          for name in ${names};
           do
-              echo "${name//-/_}  ==  $(${name})" >> secrets1.txt
-          done < secrets.txt  
-
-    # - script: |
-    #       echo $(dev-eic-secret01)
+            secret_value=$(az keyvault secret show --name ${name} --vault-name dev-eic-mykeyvaulty101 --query 'value' -o tsv)
+            echo "${name//-/_}  ==  ${secret_value}" >> secrets.txt
+          done
 
     - task: CopyFiles@2
       displayName: Copy secret files
