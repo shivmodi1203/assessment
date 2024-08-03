@@ -18,15 +18,30 @@ stages:
         KeyVaultName: 'dev-eic-mykeyvaulty101'
         SecretsFilter: '*'
         RunAsPreJob: false
-    - script: |
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'mykeyvault-service'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
           #!/bin/bash
-
+          
           names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
 
           for name in ${names};
           do
               echo "${name//-/_}  ==  ${name}" >> secrets.txt
           done
+    
+    # - script: |
+    #       #!/bin/bash
+
+    #       names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
+
+    #       for name in ${names};
+    #       do
+    #           echo "${name//-/_}  ==  ${name}" >> secrets.txt
+    #       done
     - task: CopyFiles@2
       displayName: Copy secret files
       inputs:
