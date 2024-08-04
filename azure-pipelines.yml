@@ -1,0 +1,43 @@
+trigger:
+- main  
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: 'my_group'  
+
+stages:
+- stage: ReadSecrets
+  jobs:
+  - job: ReadSecrets
+    steps:
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'mykeyvault-service'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          #!/bin/bash
+          
+          names=$(az keyvault secret list --vault-name dev-eic-mykeyvaulty101 --query '[].name' -o tsv)
+
+          for name in ${names};
+          do
+            secret_value=$(az keyvault secret show --name ${name} --vault-name dev-eic-mykeyvaulty101 --query 'value' -o tsv)
+            echo "${name//-/_}  ==  ${secret_value}" >> secrets.txt
+          done
+
+    - task: CopyFiles@2
+      displayName: Copy secret files
+      inputs:
+        Contents: 'secrets.txt'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+        
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifacts
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
